@@ -5,8 +5,9 @@ import Employee.EmployeeType;
 public class Commissioned extends Salaried {
     private double commissionRate, sales;
 
-    public Commissioned(double salary) {
+    public Commissioned(double salary, double commissionRate) {
         super(salary);
+        this.commissionRate = commissionRate;
         this.sales = 0;
     }
 
@@ -16,7 +17,7 @@ public class Commissioned extends Salaried {
     }
 
     public void submit(double sale){
-        this.sales += sale * commissionRate;
+        this.sales += sale;
     }
 
     @Override

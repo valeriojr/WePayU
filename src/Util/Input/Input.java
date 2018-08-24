@@ -18,6 +18,18 @@ public class Input {
         return null;
     }
 
+    public static Double getDouble(String prompt){
+        try {
+            System.out.println(prompt);
+            double result = scanner.nextDouble();
+            scanner.nextLine();
+            return result;
+        } catch (InputMismatchException e) {
+            System.out.println("Número inválido.");
+        }
+        return null;
+    }
+
     public static String getString(String prompt){
         System.out.println(prompt);
         return scanner.nextLine();

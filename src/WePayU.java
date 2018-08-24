@@ -1,4 +1,5 @@
 import Employee.Employee;
+import Employee.Types.Commissioned;
 import Employee.Types.Hourly;
 import Employee.Types.Salaried;
 import Util.Input.Input;
@@ -18,6 +19,8 @@ public class WePayU {
         Employee e = createEmployee();
         addEmployee(e);
 
+        launchSaleResult((Commissioned) e.getType());
+
         System.out.println(e);
     }
 
@@ -26,11 +29,23 @@ public class WePayU {
                 Input.getString("Nome do funcionário"),
                 Input.getString("Endereço"),
                 employeeId++,
-                new Hourly(6.0)
+                new Commissioned(400.0, 12)
         );
     }
 
     static void addEmployee(Employee employee){
         employeeMap.put(employee.getId(), employee);
+    }
+
+    static void removeEmployee(long id){
+        employeeMap.remove(id);
+    }
+
+    static void launchPointCard(Hourly h){
+        h.submit(Input.getInt("Digite a quantidade de horas trabalhadas"));
+    }
+
+    static void launchSaleResult(Commissioned c){
+        c.submit(Input.getDouble("Digite o valor total da venda"));
     }
 }

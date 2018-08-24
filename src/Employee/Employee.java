@@ -20,4 +20,8 @@ public class Employee {
     public String toString() {
         return String.format("Nome: %s\nEndereço: %s\nId: %d\n", name, address, id) + type.toString();
     }
+
+    public EmployeeType getType() {
+        return type;
+    }
 }

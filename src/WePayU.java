@@ -26,7 +26,7 @@ public class WePayU {
                 Input.getString("Nome do funcionário"),
                 Input.getString("Endereço"),
                 employeeId++,
-                new Hourly()
+                new Hourly(6.0)
         );
     }
 

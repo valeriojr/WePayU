@@ -16,6 +16,6 @@ public class Salaried implements EmployeeType {
 
     @Override
     public String toString() {
-        return String.format("Tipo: Assalariado\nSalário: %.2f\n", salary);
+        return String.format("Tipo: Assalariado\nSalário: %.2f /mês\n", salary);
     }
 }

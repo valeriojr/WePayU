@@ -21,6 +21,6 @@ public class Commissioned extends Salaried {
 
     @Override
     public String toString() {
-        return String.format("Tipo: Comissionado\nTaxa de comissão: %.2f\nVendas: %f", commissionRate, sales);
+        return String.format("Tipo: Comissionado\nTaxa de comissão: %.2f %%\nVendas: %f", commissionRate, sales);
     }
 }

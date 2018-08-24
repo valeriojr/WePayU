@@ -5,17 +5,17 @@ import Employee.EmployeeType;
 public class Hourly implements EmployeeType {
     int hours;
     double extraHours;
-    double dailyRate;
+    double hourlyWage;
 
-    public Hourly(double dailyRate){
+    public Hourly(double hourlyWage){
         this.hours = 0;
         this.extraHours = 0;
-        this.dailyRate = dailyRate;
+        this.hourlyWage = hourlyWage;
     }
 
     @Override
     public double getPayment() {
-        return (hours + extraHours * 1.5) * dailyRate;
+        return (hours + extraHours * 1.5) * hourlyWage;
     }
 
     public void submit(int hours){
@@ -27,6 +27,6 @@ public class Hourly implements EmployeeType {
 
     @Override
     public String toString() {
-        return String.format("Tipo: Horista\nDiária: %.2f\nHoras trabalhadas: %d", dailyRate, hours);
+        return String.format("Tipo: Horista\nSalário Horário: %.2f R$/h\nHoras trabalhadas: %d h", hourlyWage, hours);
     }
 }

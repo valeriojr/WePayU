@@ -1,7 +1,5 @@
 package Employee.Types;
 
-import Employee.EmployeeType;
-
 public class Commissioned extends Salaried {
     private double commissionRate, sales;
 

@@ -1,27 +1,51 @@
+import Documents.Timecard;
 import Employee.Employee;
 import Employee.Types.Commissioned;
 import Employee.Types.Hourly;
 import Employee.Types.Salaried;
 import Util.Input.Input;
+import Util.Menu.ConfirmDialog;
+import Util.Menu.MainMenu;
+import Util.Menu.Menu;
 
 import java.util.Map;
+import java.util.Stack;
 import java.util.TreeMap;
 
 public class WePayU {
     static Map<Long, Employee> employeeMap;
     static long employeeId = 1;
+    static Stack<Menu> menuStack;
 
     public static void main(String args[]){
         employeeMap = new TreeMap<>();
+        menuStack = new Stack<>();
 
         System.out.println("Bem vindo!");
 
-        Employee e = createEmployee();
-        addEmployee(e);
+        startMenu(new MainMenu());
 
-        launchSaleResult((Commissioned) e.getType());
+        boolean exit = false;
 
-        System.out.println(e);
+        while(!exit){
+            showMenu();
+            int in = Input.getInt("Selecione uma opção");
+            switch (in){
+                case 1:
+                    addEmployee(createEmployee());
+                    break;
+                case 2:
+                    removeEmployee(employeeId);
+                    break;
+                case 3:
+                    requestTimecard();
+                    break;
+                case 4:
+                    launchTimecard();
+                    break;
+            }
+
+        }
     }
 
     static Employee createEmployee(){
@@ -29,7 +53,7 @@ public class WePayU {
                 Input.getString("Nome do funcionário"),
                 Input.getString("Endereço"),
                 employeeId++,
-                new Commissioned(400.0, 12)
+                new Hourly(Input.getDouble("Salário horário"))
         );
     }
 
@@ -41,11 +65,43 @@ public class WePayU {
         employeeMap.remove(id);
     }
 
-    static void launchPointCard(Hourly h){
-        h.submit(Input.getInt("Digite a quantidade de horas trabalhadas"));
+    static void requestTimecard(){
+        Employee e = searchEmployee(Input.getLong("Digite a id do empregado"));
+        if(e.getType() instanceof Hourly){
+            Hourly hourly = (Hourly) e.getType();
+            hourly.addTimecard(new Timecard());
+            System.out.println(hourly.getTimecards().peek());
+        }
     }
 
-    static void launchSaleResult(Commissioned c){
-        c.submit(Input.getDouble("Digite o valor total da venda"));
+    static void launchTimecard(){
+        Employee e = searchEmployee(Input.getLong("Digite a id do empregado"));
+        if(e.getType() instanceof Hourly){
+            Hourly hourly = ((Hourly) e.getType());
+            hourly.getTimecards().peek().submit(Input.getInt("Digite a quantidade de horas trabalhadas"));
+            System.out.println(hourly.getTimecards().peek());
+        }
+    }
+
+    static void launchSaleResult(){
+
+    }
+
+    private static void showMenu(){
+        if(!menuStack.empty()){
+            menuStack.peek().show();
+        }
+    }
+
+    private static void startMenu(Menu menu){
+        menuStack.push(menu);
+    }
+
+    private static void finishMenu(){
+        menuStack.pop();
+    }
+
+    private static Employee searchEmployee(long key){
+        return employeeMap.get(key);
     }
 }

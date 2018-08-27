@@ -15,7 +15,12 @@ public class Salaried implements EmployeeType {
     }
 
     @Override
+    public boolean isPayDay() {
+        return false;
+    }
+
+    @Override
     public String toString() {
-        return String.format("Tipo: Assalariado\nSalário: %.2f /mês\n", salary);
+        return String.format("Assalariado | Salário: %.2f/mês", salary);
     }
 }

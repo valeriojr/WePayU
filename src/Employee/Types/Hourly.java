@@ -2,6 +2,9 @@ package Employee.Types;
 
 import Documents.Timecard;
 import Employee.EmployeeType;
+import Menu.MenuManager;
+import Menu.MessageDialog;
+import Util.Input.Input;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +24,14 @@ public class Hourly implements EmployeeType {
     }
 
     public void addTimecard(Timecard timecard) {
-        if (!timecards.empty()) {
-            if (timecards.peek().submitted()) {
-                timecards.add(timecard);
-            }
+        if(timecards.empty()){
+            timecards.push(timecard);
+            return;
+        }
+        if(timecards.peek().alreadySubmitted()) {
+            timecards.push(timecard);
         }else {
-            timecards.add(timecard);
+            MenuManager.getInstance().startNewMenu(new MessageDialog("Submeta o cartão anterior"));
         }
     }
 
@@ -35,19 +40,29 @@ public class Hourly implements EmployeeType {
         return (hours + extraHours * 1.5) * hourlyWage;
     }
 
-    public void submit(int hours){
-        if(hours > 8){
-            this.extraHours += hours - 8;
+    @Override
+    public boolean isPayDay() {
+        return false;
+    }
+
+    public void submitTimecard(){
+        if(timecards.empty()){
+            MenuManager.getInstance().startNewMenu(new MessageDialog("Cartão de ponto não encontrado"));
+            return;
         }
-        this.hours += hours;
+        if(timecards.peek().alreadySubmitted()){
+            MenuManager.getInstance().startNewMenu(new MessageDialog("Cartão de ponto já submetido"));
+            return;
+        }
+        timecards.peek().submit(Input.getInt("Horas trabalhadas"));
+        if(timecards.peek().getHours() > 8){
+            this.extraHours += timecards.peek().getHours() - 8;
+        }
+        this.hours += timecards.peek().getHours();
     }
 
     @Override
     public String toString() {
-        return String.format("Tipo: Horista\nSalário Horário: %.2f R$/h\nHoras trabalhadas: %d h", hourlyWage, hours);
-    }
-
-    public Stack<Timecard> getTimecards() {
-        return timecards;
+        return String.format("Horista | Salário Horário: %.2f R$/h | Horas trabalhadas: %d h", hourlyWage, hours);
     }
 }

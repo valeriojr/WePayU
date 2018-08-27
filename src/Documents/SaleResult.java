@@ -13,6 +13,10 @@ public class SaleResult {
         this.date = new Date();
     }
 
+    public double getTotalValue() {
+        return totalValue;
+    }
+
     @Override
     public String toString() {
         return String.format("Data da venda: %s\nValor total: %.2fR$\n", DateFormatter.format(date), totalValue);

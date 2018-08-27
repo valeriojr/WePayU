@@ -8,7 +8,7 @@ public class Input {
 
     public static Integer getInt(String message){
         try {
-            System.out.println(message);
+            System.out.print(message + ": ");
             int result = scanner.nextInt();
             scanner.nextLine();
             return result;
@@ -20,7 +20,7 @@ public class Input {
 
     public static Double getDouble(String message){
         try {
-            System.out.println(message);
+            System.out.print(message + ": ");
             double result = scanner.nextDouble();
             scanner.nextLine();
             return result;
@@ -31,12 +31,19 @@ public class Input {
     }
 
     public static String getString(String message){
-        System.out.println(message);
+        System.out.print(message + ": ");
         return scanner.nextLine();
     }
 
     public static long getLong(String message) {
-        System.out.println(message);
-        return scanner.nextLong();
+        System.out.print(message + ": ");
+        long l = scanner.nextLong();
+        scanner.nextLine();
+        return l;
+    }
+
+    public static Object get(String message) {
+        System.out.print(message + ": ");
+        return scanner.next();
     }
 }

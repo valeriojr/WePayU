@@ -24,7 +24,11 @@ public class Timecard {
         return String.format(formatString, DateFormatter.timeFormat(arrival), DateFormatter.timeFormat(departure), hours);
     }
 
-    public boolean submitted() {
-        return departure == null;
+    public boolean alreadySubmitted(){
+        return departure != null;
+    }
+
+    public int getHours() {
+        return hours;
     }
 }
